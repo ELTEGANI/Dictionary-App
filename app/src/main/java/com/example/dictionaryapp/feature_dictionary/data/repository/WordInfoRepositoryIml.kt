@@ -15,9 +15,11 @@ class WordInfoRepositoryIml(
     private val wordInfoDao: WordInfoDao
 ) : WordInfoRepository{
     override fun getWordInfo(word: String): Flow<Resource<List<WordInfo>>> = flow{
+
         emit(Resource.Loading())
         val wordsInfo = wordInfoDao.getWordInfo(word).map { it.toWordInfo() }
         emit(Resource.Loading(data = wordsInfo))
+
         try {
          val remoteWordInfo = dictionaryApi.getWordInfo(word)
          wordInfoDao.deleteWordInfos(remoteWordInfo.map { it.word })
@@ -33,6 +35,11 @@ class WordInfoRepositoryIml(
                 data = wordsInfo
             ))
         }
+
+        val wordInfos = wordInfoDao.getWordInfo(word).map { it.toWordInfo() }
+        emit(Resource.Success(wordInfos))
+
+
     }
 
 }
