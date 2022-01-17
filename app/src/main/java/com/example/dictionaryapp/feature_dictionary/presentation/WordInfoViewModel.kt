@@ -26,7 +26,7 @@ class WordInfoViewModel @Inject constructor(private val getWordInfo: GetWordInfo
     val state : State<WordInfoState> = _state
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val evenFlow = _eventFlow.asSharedFlow()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     private var searchJob : Job? = null
 
