@@ -1,7 +1,6 @@
 package com.example.dictionaryapp.feature_dictionary.data.remote.dto
 
 import com.example.dictionaryapp.feature_dictionary.data.local.entity.WordInfoEntity
-import com.example.dictionaryapp.feature_dictionary.domain.models.WordInfo
 
 data class WordInfoDto(
     val meanings: List<MeaningDto>,
