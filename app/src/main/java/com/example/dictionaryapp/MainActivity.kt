@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dictionaryapp.feature_dictionary.presentation.WordInfoItem
 import com.example.dictionaryapp.feature_dictionary.presentation.WordInfoViewModel
@@ -24,9 +25,15 @@ import kotlinx.coroutines.flow.collectLatest
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             DictionaryAppTheme {
              val viewModel:WordInfoViewModel = hiltViewModel()
+                installSplashScreen().apply {
+                    setKeepOnScreenCondition{
+                        viewModel.isLoading.value
+                    }
+                }
              val state = viewModel.state.value
              val scaffoldState = rememberScaffoldState()
                 LaunchedEffect(key1 =true){

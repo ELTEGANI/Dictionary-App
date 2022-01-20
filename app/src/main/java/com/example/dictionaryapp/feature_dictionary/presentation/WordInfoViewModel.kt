@@ -9,16 +9,23 @@ import com.example.dictionaryapp.feature_dictionary.domain.use_cases.GetWordInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class WordInfoViewModel @Inject constructor(private val getWordInfo: GetWordInfo) : ViewModel(){
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            //simulation for fetching data from network
+            delay(4000)
+            _isLoading.value = false
+        }
+    }
     private val _searchQuery = mutableStateOf("")
     val searchQuery : State<String> = _searchQuery
 
